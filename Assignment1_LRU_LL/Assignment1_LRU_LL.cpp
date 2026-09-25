@@ -1,5 +1,8 @@
 #include <iostream>
 using namespace std;
+//Memory Manager
+
+
 //LinkedList Implementation - Generic
 template<class T>
 class list {
@@ -112,6 +115,34 @@ public:
     }
     iterator end() {
         return NULL;
+    }
+};
+//Program
+class Program {
+    int programID;
+    double memoryUsage;
+    list<int> PageList;
+public:
+    Program() {
+        programID = 0;
+        memoryUsage = 0;
+        PageList = list<int>();
+    }
+};
+class MemoryManager {
+    list<Program>Pro;
+public:
+    bool startProgram(int ID) {
+
+    }
+    bool accessPage(int ID, int index) {
+
+    }
+    bool endProgram(int ID) {
+
+    }
+    void printState() const {
+
     }
 };
 int main()
