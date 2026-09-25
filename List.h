@@ -1,6 +1,4 @@
-#include <iostream>
-using namespace std;
-#include<List.h>
+#pragma once
 //LinkedList Implementation - Generic
 template<class T>
 class list {
@@ -112,7 +110,7 @@ public:
         while (curr) {
             cout << "(" << curr->val << ")->";
             curr = curr->next;
-        }cout << "NULL"<<endl;
+        }cout << "NULL" << endl;
     }
     class iterator {
         node* current;
@@ -124,7 +122,7 @@ public:
             current = iter.current;
         }
         T operator *() {
-            if(current != NULL)
+            if (current != NULL)
                 return current->val;
         }
         iterator operator ++() {
@@ -150,44 +148,3 @@ public:
         return NULL;
     }
 };
-//Program
-class Program {
-    int programID;
-    double memoryUsage;
-    list<int> PageList;
-public:
-    Program() {
-        programID = 0;
-        memoryUsage = 0;
-        PageList = list<int>();
-    }
-};
-//Memory Manager
-class MemoryManager {
-    list<Program>Pro;
-public:
-    bool startProgram(int ID) {
-
-    }
-    bool accessPage(int ID, int index) {
-
-    }
-    bool endProgram(int ID) {
-
-    }
-    void printState() const {
-
-    }
-};
-int main()
-{
-    list<int>l;
-    list<int>::iterator iter;
-    l.push_back(1);
-    l.push_back(2);
-    l.push_back(3);
-    for (iter = l.begin(); iter != l.end(); ++iter) {
-        cout << *iter << endl;  
-    }
-    return 0;
-}
