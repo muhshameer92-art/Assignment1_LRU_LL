@@ -60,7 +60,7 @@ public:
     void printState() {
         for (list<Program>::iterator iter = ProgramList.begin();
             iter != ProgramList.end(); ++iter) {
-           cout << *iter <<"+\t+++\n\t\t|\n\t\tV" << endl;
+           cout << *iter <<"+++++++++\n\t|\n\tV" << endl;
         }
     }
 };

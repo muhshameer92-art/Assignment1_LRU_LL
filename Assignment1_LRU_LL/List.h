@@ -102,10 +102,17 @@ public:
             pop_front();
             return true;
         }
-        node* curr = head;
-        while (curr) {
-
+        node* prev = head;
+        node* del = NULL;
+        while (prev -> next != NULL && prev -> next -> val != d) {
+            prev = prev->next;
         }
+        del = prev->next;
+        if (!del)
+            return false;
+        prev->next = del->next;
+        delete del;
+        return true;
     }
     void show_List() const {
         node* curr = head;
@@ -123,9 +130,8 @@ public:
         iterator(const iterator& iter) {
             current = iter.current;
         }
-        T operator *() {
-            if (current != NULL)
-                return current->val;
+        T& operator *() const{
+            return current->val;
         }
         iterator operator ++() {
             current = current->next;
