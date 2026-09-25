@@ -6,7 +6,7 @@ class list {
     public:
         node* next;
         T val;
-        node(T d, node* n = NULL) {
+        node(T d = T(), node* n = NULL) {
             val = d;
             next = n;
         }
@@ -100,22 +100,10 @@ public:
             pop_front();
             return true;
         }
-        node* prev = head;
-        node* page = NULL;
-        while (prev -> next) {
-            if (prev->next->val == d)
-            {
-                page = prev->next;
-                break;
-            }
-            if(prev -> next)
-                prev = prev->next;
+        node* curr = head;
+        while (curr) {
+
         }
-        if (page == NULL)
-            return false;
-        prev->next = page->next;
-        delete page;
-        return true;
     }
     void show_List() const {
         node* curr = head;
