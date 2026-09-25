@@ -5,92 +5,42 @@
 using namespace std;
 int main()
 {
-    //list<int>l;
-    //list<int>::iterator iter;
-    //l.push_back(1);
-    //l.push_back(2);
-    //l.push_back(3);
-    //for (iter = l.begin(); iter != l.end(); ++iter) {
-    //    cout << *iter << endl;  
-    //}
     MemoryManager mm;
 
-    cout << "==========================================" << endl;
-    cout << "     MEMORY MANAGER SIMULATION TEST       " << endl;
-    cout << "==========================================" << endl << endl;
+    // start a few programs, one with a memory footprint that's kind of a lot
+    mm.startProgram(101, 64);
+    mm.startProgram(102, 128);
+    mm.startProgram(103, 32);
 
-    // ----------------------------------------------------
-    // TEST 1: Starting Programs & Duplicate ID Handling
-    // ----------------------------------------------------
-    cout << "[TEST 1] Starting Programs..." << endl;
+    // shouldn't be able to start 101 twice
+    if (!mm.startProgram(101, 64))
+        cout << "#101 is already running, good, that was supposed to fail\n";
 
-    if (mm.startProgram(101, 64))
-        cout << "  -> Program 101 started successfully." << endl;
-    if (mm.startProgram(102, 128))
-        cout << "  -> Program 102 started successfully." << endl;
-    if (mm.startProgram(103, 32))
-        cout << "  -> Program 103 started successfully." << endl;
+    // give 101 some pages to work with
+    mm.accessPage(101, 5);
+    mm.accessPage(101, 12);
+    mm.accessPage(101, 3);
+    mm.accessPage(101, 8);
 
-    // Test Duplicate ID Guard
-    if (!mm.startProgram(101, 64)) {
-        cout << "  -> Duplicate ID Check Passed: Program 101 rejected." << endl;
-    }
-    cout << endl;
+    // touch 12 again so it jumps back to the front (MRU)
+    mm.accessPage(101, 12);
 
-    // ----------------------------------------------------
-    // TEST 2: Page Access (Page Miss vs. Page Hit / MRU)
-    // ----------------------------------------------------
-    cout << "[TEST 2] Accessing Pages for Program 101..." << endl;
-
-    // Page Misses: Pushing pages into empty memory
-    mm.accessPage(101, 5);  // List: [5]
-    mm.accessPage(101, 12); // List: [12, 5]
-    mm.accessPage(101, 3);  // List: [3, 12, 5]
-    mm.accessPage(101, 8);  // List: [8, 3, 12, 5]
-    cout << "  -> Added pages 5, 12, 3, 8 to Program 101 (Page Misses)." << endl;
-
-    // Page Hit: Accessing page 12 again should shift it to the front (MRU)
-    cout << "  -> Accessing Page 12 again (Page Hit - MRU Shift)..." << endl;
-    mm.accessPage(101, 12); // Expected List: [12, 8, 3, 5]
-
-    // Access pages for Program 102
+    // 102 gets a couple pages too
     mm.accessPage(102, 1);
     mm.accessPage(102, 2);
     mm.accessPage(102, 3);
 
-    // Test access on a non-existent program
-    if (!mm.accessPage(999, 1)) {
-        cout << "  -> Invalid Access Guard Passed: Program 999 not found." << endl;
-    }
-    cout << endl;
+    // this one should just fail quietly, no program 999
+    mm.accessPage(999, 1);
 
-    // ----------------------------------------------------
-    // TEST 3: Print Initial Memory State
-    // ----------------------------------------------------
-    cout << "[TEST 3] Current Memory Manager State:" << endl;
-    cout << "------------------------------------------" << endl;
+    cout << "\n#state before killing anything:\n";
     mm.printState();
-    cout << "------------------------------------------" << endl << endl;
 
-    // ----------------------------------------------------
-    // TEST 4: Terminating Programs (endProgram)
-    // ----------------------------------------------------
-    cout << "[TEST 4] Terminating Program 102..." << endl;
-    if (mm.endProgram(102)) {
-        cout << "  -> Program 102 successfully removed." << endl;
-    }
+    // now kill 102 and see if it's actually gone
+    mm.endProgram(102);
+    mm.endProgram(102); // and again, just to make sure it doesn't blow up
 
-    if (!mm.endProgram(102)) {
-        cout << "  -> Removal Guard Passed: Program 102 already deleted." << endl;
-    }
-    cout << endl;
-
-    // ----------------------------------------------------
-    // TEST 5: Final Memory State Verification
-    // ----------------------------------------------------
-    cout << "[TEST 5] Final Memory State After Cleanup:" << endl;
-    cout << "------------------------------------------" << endl;
+    cout << "\n#state after removing 102:\n";
     mm.printState();
-    cout << "------------------------------------------" << endl;
     return 0;
 }

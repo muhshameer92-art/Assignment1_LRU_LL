@@ -28,7 +28,7 @@ public:
             }delete head;
         }
     }
-    void push_front(T d) {
+    void push_front(const T &d) {
         node* newNode = new node(d);
         if (head == NULL) {
             head = newNode;
@@ -37,7 +37,7 @@ public:
         newNode->next = head;
         head = newNode;
     }
-    void push_back(T d) {
+    void push_back(const T &d) {
         node* newNode = new node(d, NULL);
         if (head == NULL) {
             head = newNode;
@@ -73,7 +73,7 @@ public:
         curr->next = del->next;
         delete del;
     }
-    bool move_MRU(T d) {
+    bool move_MRU(const T &d) {
         if (!head)
             return false;
         if (head->val == d)
@@ -94,7 +94,7 @@ public:
 
         return true;
     }
-    bool remove(T d) {
+    bool remove(const T &d) {
         if (!head)
             return false;
         if (head->val == d)
