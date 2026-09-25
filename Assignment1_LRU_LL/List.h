@@ -1,5 +1,7 @@
 #pragma once
 //LinkedList Implementation - Generic
+#include<iostream>
+using namespace std;
 template<class T>
 class list {
     class node { // a node is a running program
