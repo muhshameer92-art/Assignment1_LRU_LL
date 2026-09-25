@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Assignment1_LRU_LL/Assignment1_LRU_LL.vcxproj" Id="ca9f7d39-6b73-470b-8ff6-27157c7c6ba4" />
+</Solution>
